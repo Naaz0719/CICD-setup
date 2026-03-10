@@ -35,7 +35,7 @@ pipeline {
             post {
                 success {
                     script {
-                        def server = Artifactory.newServer(url: 'http://13.201.48.107:8081/artifactory/', credentialsId: 'jfrog')
+                        def server = Artifactory.newServer(url: 'http://43.204.115.62:8081/artifactory/', credentialsId: 'jfrog')
                         def rtMaven = Artifactory.newMavenBuild()
                         //rtMaven.deployer server: server, releaseRepo: 'libs-release/', snapshotRepo: 'libs-snapshot/'
                         rtMaven.deployer server: server, releaseRepo: 'training', snapshotRepo: 'training'
@@ -51,13 +51,13 @@ pipeline {
             }
             steps {
                 script {
-                    // sh 'curl -o jenkins-test-1.0.jar http://43.205.140.109:8081/artifactory/libs-release/com/example/jenkins-test/1.0/jenkins-test-1.0.jar'
+                    // sh 'curl -o jenkins-test-1.0.jar http://43.204.115.62:8081/artifactory/libs-release/com/example/jenkins-test/1.0/jenkins-test-1.0.jar'
                    
                     sh '''
-                        aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin 804480554088.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
+                        aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin 434729668948.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
                         docker build -t sstest .
-                        docker tag sstest:latest 804480554088.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/sstest:latest
-                        docker push 804480554088.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/sstest:latest
+                        docker tag sstest:latest 434729668948.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/sstest:latest
+                        docker push 434729668948.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/sstest:latest
 
                         # Update kubeconfig to interact with EKS
                         aws eks update-kubeconfig --region ap-south-1 --name cluster-eksctl
